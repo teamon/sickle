@@ -1,3 +1,8 @@
+[![Code Climate](https://codeclimate.com/github/teamon/sickle.png)](https://codeclimate.com/github/teamon/sickle)
+[![Build Status](https://travis-ci.org/teamon/sickle.png?branch=master)](https://travis-ci.org/teamon/sickle)
+[![Gem Version](https://badge.fury.io/rb/sickle.png)](https://rubygems.org/gems/sickle)
+[![Coverage Status](https://coveralls.io/repos/teamon/sickle/badge.png?branch=master)](https://coveralls.io/r/teamon/sickle)
+
 # Sickle
 
 ## Description
