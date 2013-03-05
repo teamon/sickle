@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Sickle::VERSION
   spec.authors       = ["Tymon Tobolski"]
   spec.email         = ["i@teamon.eu"]
-  spec.description   = %q{sickle}
-  spec.summary       = %q{sickle}
+  spec.description   = %q{Sickle is dead simple library for building complex command line tools.}
+  spec.summary       = %q{Sickle is dead simple library for building complex command line tools.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
