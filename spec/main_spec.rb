@@ -12,7 +12,7 @@ describe Sickle do
 
     it "list of commands" do
       App.__commands.keys.must_equal(
-        %w(task1 task2 conflict sub:sub1 sub:conflict other:other1 other:conflict nosub))
+        %w(help task1 task2 conflict sub:sub1 sub:conflict other:other1 other:conflict nosub))
     end
 
     it "correct commands descriptions" do
