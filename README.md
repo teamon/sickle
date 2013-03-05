@@ -2,7 +2,7 @@
 
 ## Description
 
-Sickle is dead simple library for building complex command line tools.
+Sickle is dead simple library for building complex command line tools. A lot of ideas and examples were inspired by [thor](https://github.com/wycats/thor).
 
 #### Features:
 
