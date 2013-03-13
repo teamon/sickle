@@ -66,7 +66,7 @@ module Sickle
     def initialize(name, opts)
       @name, @opts = name, opts
 
-      @default = opts[:default] || false
+      @default = opts.has_key?(:default) ? opts[:default] : false
 
       if @default == true || @default == false
         @type = :boolean

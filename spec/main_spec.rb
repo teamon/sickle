@@ -12,7 +12,7 @@ describe Sickle do
 
     it "list of commands" do
       App.__commands.keys.must_equal(
-        %w(help task1 task2 conflict sub:sub1 sub:conflict other:other1 other:conflict nosub))
+        %w(help task1 task2 conflict test_option sub:sub1 sub:conflict other:other1 other:conflict nosub))
     end
 
     it "correct commands descriptions" do
@@ -63,6 +63,11 @@ describe Sickle do
       App.run(%w(conflict)).must_equal ["nosub:conflict"]
       App.run(%w(sub:conflict)).must_equal ["sub1:conflict"]
       App.run(%w(other:conflict)).must_equal ["other1:conflict"]
+    end
+
+    it "option with nil default" do
+      App.run(%w(test_option)).must_equal ["test_option", nil]
+      App.run(%w(test_option --null foo)).must_equal ["test_option", "foo"]
     end
   end
 end

@@ -63,6 +63,11 @@ class App
     p ["app:conflict"]
   end
 
+  option :null, :default => nil
+  def test_option
+    p ["test_option", options[:null]]
+  end
+
 
   include_modules :sub    => Sub,
                   :other  => Other
