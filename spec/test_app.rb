@@ -8,6 +8,7 @@ module Sub
     p ["sub1"]
   end
 
+  desc "Will make conflict!"
   def conflict
     p ["sub1:conflict"]
   end
@@ -21,6 +22,7 @@ module Other
     p ["other1", blah]
   end
 
+  desc "Will make conflict!"
   def conflict
     p ["other1:conflict"]
   end
@@ -34,6 +36,7 @@ module NoSub
     p ["nosub"]
   end
 
+  desc "Will make conflict!"
   def conflict
     p ["nosub:conflict"]
   end
@@ -59,13 +62,18 @@ class App
     p ["task2", options[:number], options[:fast], options[:slow], options[:verbose], options[:debug]]
   end
 
+  desc "Will make conflict!"
   def conflict
     p ["app:conflict"]
   end
 
   option :null, :default => nil
+  desc "Test"
   def test_option
     p ["test_option", options[:null]]
+  end
+
+  def private_task
   end
 
 

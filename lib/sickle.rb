@@ -101,13 +101,19 @@ module Sickle
   end
 
   module Help
-    def help(command = nil)
-      if command
-        __display_help_for_command(command)
-      else
-        __display_help
+    def self.included(base)
+      base.class_eval do
+        desc "Display help"
+        def help(command = nil)
+          if command
+            __display_help_for_command(command)
+          else
+            __display_help
+          end
+        end
       end
     end
+
 
     def __display_help_for_command(name)
       if cmd = self.class.__commands[name]
@@ -247,7 +253,9 @@ module Sickle
 
     def method_added(a)
       meth = instance_method(a)
-      __commands[a.to_s] = Command.new(meth, a, Sickle.pop_desc, Sickle.pop_options)
+      if desc = Sickle.pop_desc
+        __commands[a.to_s] = Command.new(meth, a, desc, Sickle.pop_options)
+      end
     end
   end
 end
