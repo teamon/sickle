@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sickle by teamon</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Sickle</h1>
+        <p>Sickle is dead simple library for building complex command line tools</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/teamon/sickle" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/teamon/sickle/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/teamon/sickle/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p><a href="https://codeclimate.com/github/teamon/sickle"><img src="https://codeclimate.com/github/teamon/sickle.png" alt="Code Climate"></a>
+<a href="https://travis-ci.org/teamon/sickle"><img src="https://travis-ci.org/teamon/sickle.png?branch=master" alt="Build Status"></a>
+<a href="https://rubygems.org/gems/sickle"><img src="https://badge.fury.io/rb/sickle.png" alt="Gem Version"></a>
+<a href="https://coveralls.io/r/teamon/sickle"><img src="https://coveralls.io/repos/teamon/sickle/badge.png?branch=master" alt="Coverage Status"></a></p>
+
+<h1>Sickle</h1>
+
+<h2>Description</h2>
+
+<p>Sickle is dead simple library for building complex command line tools. A lot of ideas and examples were inspired by <a href="https://github.com/wycats/thor">thor</a>.</p>
+
+<h4>Features:</h4>
+
+<ul>
+<li>Based on classes and modules</li>
+<li>Support for commands</li>
+<li>Support for namespaces</li>
+<li>Support for command options and global options</li>
+<li>Usage and help for free</li>
+<li>No external dependencies (only stdlib optparse)</li>
+</ul><h2>Installation</h2>
+
+<p>You are probably building command line tool that will be released as gem, just add that line to you gemspec.</p>
+
+<div class="highlight"><pre><span class="n">spec</span><span class="o">.</span><span class="n">add_dependency</span> <span class="s1">'sickle'</span>
+</pre></div>
+
+<h2>Usage</h2>
+
+<h3>Basic usage</h3>
+
+<p>Simple create a class with methods and some options</p>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s2">"sickle"</span>
+
+<span class="k">class</span> <span class="nc">App</span>
+  <span class="kp">include</span> <span class="ss">Sickle</span><span class="p">:</span><span class="ss">:Runner</span>
+
+  <span class="n">global_option</span> <span class="ss">:verbose</span>                      <span class="c1"># global flag</span>
+
+  <span class="n">desc</span> <span class="s2">"install one of the available apps"</span>    <span class="c1"># command description</span>
+  <span class="n">option</span> <span class="ss">:force</span>                               <span class="c1"># flag for `install` command</span>
+  <span class="n">option</span> <span class="ss">:host</span><span class="p">,</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s2">"localhost"</span>       <span class="c1"># option</span>
+  <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span>                         <span class="c1"># access options</span>
+      <span class="c1"># do something</span>
+    <span class="k">end</span>
+    <span class="c1"># the rest</span>
+  <span class="k">end</span>
+
+  <span class="n">desc</span> <span class="s2">"list all apps, search is possible"</span>
+  <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="n">search</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+<span class="no">App</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="no">ARGV</span><span class="p">)</span> <span class="c1"># start parsing ARGV</span>
+</pre></div>
+
+<p>This will allow for execution command like:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>mytool install foo
+<span class="nv">$ </span>mytool install foo --force --verbose --host 127.0.0.1
+<span class="nv">$ </span>mytool list
+<span class="nv">$ </span>mytool list rails --verbose
+</pre></div>
+
+<p>Help is for free:</p>
+
+<pre><code>$ mytool help
+USAGE:
+  mytool COMMAND [ARG1, ARG2, ...] [OPTIONS]
+
+TASKS:
+  help [COMMAND]  
+  install NAME    # install one of the available apps
+  list [SEARCH]   # list all apps, search is possible
+
+GLOBAL OPTIONS:
+  --verbose (default: false)
+</code></pre>
+
+<p>There is also detailed help for command:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>mytool <span class="nb">help </span>install
+USAGE:
+  mytool install NAME
+
+DESCRIPTION:
+  install one of the available apps
+
+OPTIONS:
+  --force <span class="o">(</span>default: <span class="nb">false</span><span class="o">)</span>
+  --host <span class="o">(</span>default: localhost<span class="o">)</span>
+</pre></div>
+
+<h3>Advanced usage - multiple modules</h3>
+
+<div class="highlight"><pre><span class="k">module</span> <span class="nn">Users</span>
+  <span class="kp">include</span> <span class="ss">Sickle</span><span class="p">:</span><span class="ss">:Runner</span>
+
+  <span class="n">desc</span> <span class="s2">"list all users"</span>
+  <span class="k">def</span> <span class="nf">list</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="n">desc</span> <span class="s2">"create new user"</span>
+  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nn">Projects</span>
+  <span class="kp">include</span> <span class="ss">Sickle</span><span class="p">:</span><span class="ss">:Runner</span>
+
+  <span class="n">desc</span> <span class="s2">"list all projects"</span>
+  <span class="k">def</span> <span class="nf">list</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nn">Global</span>
+  <span class="kp">include</span> <span class="ss">Sickle</span><span class="p">:</span><span class="ss">:Runner</span>
+
+  <span class="n">desc</span> <span class="s2">"have some fun at top level"</span>
+  <span class="k">def</span> <span class="nf">fun</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">App</span>
+  <span class="kp">include</span> <span class="ss">Sickle</span><span class="p">:</span><span class="ss">:Runner</span>
+
+  <span class="n">desc</span> <span class="s2">"top level command"</span>
+  <span class="k">def</span> <span class="nf">main</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="n">include_modules</span> <span class="ss">:users</span> <span class="o">=&gt;</span> <span class="no">Users</span><span class="p">,</span>      <span class="c1"># bind commands from Users module under "users" namespace</span>
+                  <span class="ss">:p</span>     <span class="o">=&gt;</span> <span class="no">Projects</span>    <span class="c1"># bind commands from Projects module under "p" namespace</span>
+
+  <span class="kp">include</span> <span class="no">Global</span>                        <span class="c1"># bind command from Global module at top level namespace</span>
+<span class="k">end</span>
+
+<span class="no">App</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="no">ARGV</span><span class="p">)</span>
+
+</pre></div>
+
+<p>Run <code>$ mytool help</code> to see how commands are namespaced:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>mytool <span class="nb">help</span>
+USAGE:
+  mytool COMMAND <span class="o">[</span>ARG1, ARG2, ...<span class="o">]</span> <span class="o">[</span>OPTIONS<span class="o">]</span>
+
+TASKS:
+  fun                <span class="c"># have some fun at top level</span>
+  <span class="nb">help</span> <span class="o">[</span>COMMAND<span class="o">]</span>     
+  main               <span class="c"># top level command</span>
+  p:list             <span class="c"># list all projects</span>
+  users:create NAME  <span class="c"># create new user</span>
+  users:list         <span class="c"># list all users</span>
+</pre></div>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/teamon">teamon</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
