@@ -18,6 +18,10 @@ Sickle is dead simple library for building complex command line tools. A lot of 
 * Usage and help for free
 * No external dependencies (only stdlib optparse)
 
+#### Requirements
+
+* Ruby: 1.9.x, 2.0.x, jruby (1.9), rbx (1.9)
+
 
 ## Installation
 
