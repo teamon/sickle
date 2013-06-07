@@ -1,6 +1,5 @@
-require "minitest/spec"
 require "minitest/autorun"
-require "turn"
+require "minitest/pride"
 
 require File.join(File.dirname(__FILE__), "test_app")
 
