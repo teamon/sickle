@@ -23,7 +23,7 @@ describe Sickle do
     end
 
     it "correct commands options" do
-      App.__commands["task1"].options.keys.must_equal [:quiet]
+      App.__commands["task1"].options.keys.must_equal [:quiet, :with_prefix]
       App.__commands["task2"].options.keys.must_equal [:fast, :slow, :number]
     end
   end
@@ -31,9 +31,9 @@ describe Sickle do
   describe "Runner" do
     it "task1" do
       App.run(["task1", "x", "y"]).must_equal(
-        ["task1", "x", "y", "def", false, false, false])
-      App.run(["task1", "x", "y", "z", "--verbose"]).must_equal(
-        ["task1", "x", "y", "z", false, true, false])
+        ["task1", "x", "y", "def", false, false, false, false])
+      App.run(["task1", "x", "y", "z", "--verbose", "--with-prefix"]).must_equal(
+        ["task1", "x", "y", "z", false, true, false, true])
     end
 
     it "task2" do

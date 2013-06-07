@@ -50,8 +50,9 @@ class App
 
   desc "Run task 1"
   option :quiet
+  option :with_prefix
   def task1(a, b, c = "def")
-    p ["task1", a, b, c, options[:quiet], options[:verbose], options[:debug]]
+    p ["task1", a, b, c, options[:quiet], options[:verbose], options[:debug], options[:with_prefix]]
   end
 
   desc "Run task 2"

@@ -77,14 +77,18 @@ module Sickle
 
     def register(parser, results)
       if @type == :boolean
-        parser.on("--#{@name}", opts[:desc]) do
+        parser.on("--#{cli_name}", opts[:desc]) do
           results[@name] = true
         end
       else
-        parser.on("--#{@name} #{@name.upcase}") do |v|
+        parser.on("--#{cli_name} #{@name.upcase}") do |v|
           results[@name] = coerce(v)
         end
       end
+    end
+
+    def cli_name
+      @name.to_s.tr("_", "-")
     end
 
     def coerce(value)
@@ -174,7 +178,7 @@ module Sickle
     end
 
     def __display_option(opt)
-      "  --#{opt.name} (default: #{opt.default})"
+      "  --#{opt.cli_name} (default: #{opt.default})"
     end
   end
 
