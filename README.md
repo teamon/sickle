@@ -43,14 +43,15 @@ require "sickle"
 class App
   include Sickle::Runner
 
-  global_option :verbose                      # global flag
+  global_flag :verbose                        # global flag, defaults to false
+  global_option :with_prefix                  # global option, defaults to nil
 
   desc "install one of the available apps"    # command description
-  option :force                               # flag for `install` command
+  flag :force                                 # flag for `install` command
   option :host, :default => "localhost"       # option
   def install(name)
-    if options[:host]                         # access options
-      # do something
+    if options[:force]                         # access options
+      do_smth_with options[:host]
     end
     # the rest
   end
@@ -82,7 +83,7 @@ USAGE:
   mytool COMMAND [ARG1, ARG2, ...] [OPTIONS]
 
 TASKS:
-  help [COMMAND]  
+  help [COMMAND]
   install NAME    # install one of the available apps
   list [SEARCH]   # list all apps, search is possible
 
@@ -168,7 +169,7 @@ USAGE:
 
 TASKS:
   fun                # have some fun at top level
-  help [COMMAND]     
+  help [COMMAND]
   main               # top level command
   p:list             # list all projects
   users:create NAME  # create new user

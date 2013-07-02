@@ -45,19 +45,19 @@ end
 class App
   include Sickle::Runner
 
-  global_option :verbose
+  global_flag :verbose
   global_option :debug
 
   desc "Run task 1"
-  option :quiet
+  flag :quiet
   option :with_prefix
   def task1(a, b, c = "def")
     p ["task1", a, b, c, options[:quiet], options[:verbose], options[:debug], options[:with_prefix]]
   end
 
   desc "Run task 2"
-  option :fast
-  option :slow
+  flag :fast
+  flag :slow
   option :number, :default => 10
   def task2
     p ["task2", options[:number], options[:fast], options[:slow], options[:verbose], options[:debug]]

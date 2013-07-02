@@ -31,26 +31,28 @@ describe Sickle do
   describe "Runner" do
     it "task1" do
       App.run(["task1", "x", "y"]).must_equal(
-        ["task1", "x", "y", "def", false, false, false, false])
-      App.run(["task1", "x", "y", "z", "--verbose", "--with-prefix"]).must_equal(
-        ["task1", "x", "y", "z", false, true, false, true])
+        ["task1", "x", "y", "def", false, false, nil, nil])
+      App.run(["task1", "x", "y", "z", "--verbose", "--with-prefix", "some/path/to"]).must_equal(
+        ["task1", "x", "y", "z", false, true, nil, "some/path/to"])
+      App.run(["task1", "--verbose", "x", "y"]).must_equal(
+        ["task1", "x", "y", "def", false, true, nil, nil])
     end
 
     it "task2" do
       App.run(["task2"]).must_equal(
-        ["task2", 10, false, false, false, false])
+        ["task2", 10, false, false, false, nil])
       App.run(%w(task2 --fast)).must_equal(
-        ["task2", 10, true, false, false, false])
+        ["task2", 10, true, false, false, nil])
       App.run(%w(task2 --slow)).must_equal(
-        ["task2", 10, false, true, false, false])
+        ["task2", 10, false, true, false, nil])
       App.run(%w(task2 --verbose)).must_equal(
-        ["task2", 10, false, false, true, false])
-      App.run(%w(task2 --debug)).must_equal(
-        ["task2", 10, false, false, false, true])
+        ["task2", 10, false, false, true, nil])
+      App.run(%w(task2 --debug 1)).must_equal(
+        ["task2", 10, false, false, false, "1"])
       App.run(%w(task2 --fast --slow --verbose)).must_equal(
-        ["task2", 10, true, true, true, false])
+        ["task2", 10, true, true, true, nil])
       App.run(%w(task2 --number 40)).must_equal(
-        ["task2", 40, false, false, false, false])
+        ["task2", 40, false, false, false, nil])
     end
 
     it "sub:sub1" do

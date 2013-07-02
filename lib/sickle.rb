@@ -66,7 +66,7 @@ module Sickle
     def initialize(name, opts)
       @name, @opts = name, opts
 
-      @default = opts.has_key?(:default) ? opts[:default] : false
+      @default = opts.has_key?(:default) ? opts[:default] : nil
 
       if @default == true || @default == false
         @type = :boolean
@@ -198,8 +198,16 @@ module Sickle
       __global_options[name.to_s] = Option.new(name, opts)
     end
 
+    def global_flag(name)
+      global_option(name, :default => false)
+    end
+
     def option(name, opts = {})
       Sickle.push_option(name, opts)
+    end
+
+    def flag(name)
+      option(name, :default => false)
     end
 
     def include_modules(hash)
