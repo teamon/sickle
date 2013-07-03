@@ -67,8 +67,8 @@ describe Sickle do
     end
 
     it "option with nil default" do
-      App.run(%w(test_option)).must_equal ["test_option", nil]
-      App.run(%w(test_option --null foo)).must_equal ["test_option", "foo"]
+      App.run(%w(test-option)).must_equal ["test_option", nil]
+      App.run(%w(test-option --null foo)).must_equal ["test_option", "foo"]
     end
   end
 end

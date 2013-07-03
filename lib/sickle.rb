@@ -146,7 +146,7 @@ module Sickle
         r == :req ? p.upcase : "[#{p.upcase}]"
       end
 
-      ["#{name} #{params.join(" ")}", command]
+      ["#{name.gsub("_", "-")} #{params.join(" ")}", command]
     end
 
     def __display_help
@@ -230,6 +230,8 @@ module Sickle
       # puts "ARGV: #{argv.inspect}"
 
       if command_name = argv.shift
+        command_name.gsub!("-", "_")
+
         if command = __commands[command_name]
           all = __global_options.values + command.options.values
 
