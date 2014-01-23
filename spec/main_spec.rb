@@ -71,4 +71,16 @@ describe Sickle do
       App.run(%w(test-option --null foo)).must_equal ["test_option", "foo"]
     end
   end
+
+  describe "Exit code" do
+    it "should be zero for successful command" do
+      system "spec/test_run.rb task1 a b c"
+      $?.must_equal 0
+    end
+
+    it "should be 127 if command was not found" do
+      system "spec/test_run.rb i-do-not-exist"
+      $?.wont_equal 127
+    end
+  end
 end

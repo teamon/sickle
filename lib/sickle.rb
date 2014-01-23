@@ -257,6 +257,7 @@ module Sickle
           puts "\e[31mCommand '#{command_name}' not found\e[0m"
           puts
           run(["help"])
+          exit 127
         end
       else
         run(["help"])
