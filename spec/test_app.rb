@@ -48,6 +48,10 @@ class App
   global_flag :verbose
   global_option :debug
 
+  before do
+    $verbose = options[:verbose]
+  end
+
   desc "Run task 1"
   flag :quiet
   option :with_prefix

@@ -83,4 +83,16 @@ describe Sickle do
       $?.wont_equal 127
     end
   end
+
+  describe "before block" do
+    it "should set $verbose to false" do
+      App.run (%w(test-option))
+      $verbose.must_equal false
+    end
+
+    it "should set $verbose to true" do
+      App.run(%w(test-option --verbose))
+      $verbose.must_equal true
+    end
+  end
 end

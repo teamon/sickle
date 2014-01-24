@@ -190,6 +190,10 @@ module Sickle
       end
     end
 
+    def before(&block)
+      @__before_hook = block
+    end
+
     def desc(label)
       Sickle.push_desc(label)
     end
@@ -252,6 +256,11 @@ module Sickle
 
           obj = self.new
           obj.instance_variable_set(:@__options, results)
+
+          if @__before_hook
+            obj.instance_exec(&@__before_hook)
+          end
+
           command.meth.bind(obj).call(*args)
         else
           puts "\e[31mCommand '#{command_name}' not found\e[0m"

@@ -46,6 +46,11 @@ class App
   global_flag :verbose                        # global flag, defaults to false
   global_option :with_prefix                  # global option, defaults to nil
 
+  # optional before hook with access to global options
+  before do
+    $verbose = options[:verbose]
+  end
+
   desc "install one of the available apps"    # command description
   flag :force                                 # flag for `install` command
   option :host, :default => "localhost"       # option
