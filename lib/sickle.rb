@@ -250,10 +250,6 @@ module Sickle
             results[o.name] ||= o.default
           end
 
-          # puts "args: #{args.inspect}"
-          # puts "results: #{results.inspect}"
-
-
           obj = self.new
           obj.instance_variable_set(:@__options, results)
 
@@ -261,7 +257,18 @@ module Sickle
             obj.instance_exec(&@__before_hook)
           end
 
-          command.meth.bind(obj).call(*args)
+          req, opt = command.meth.parameters.partition {|(r,_)| r == :req }
+          r,o = req.size, opt.size
+          argr = (r..(r+o))
+
+          if argr.include?(args.size)
+            command.meth.bind(obj).call(*args)
+          else
+            puts "\e[31mWrong number of arguments (#{args.size} for #{argr})\e[0m"
+            puts
+            run(["help", command_name])
+            exit 127
+          end
         else
           puts "\e[31mCommand '#{command_name}' not found\e[0m"
           puts
